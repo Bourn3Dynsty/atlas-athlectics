@@ -44,7 +44,7 @@
       </nav>
       <nav class="sidebar" data-simplebar>
         <img class="img-fluid sidebar-avatar" src="img/profile-avatar.jpg" alt="Profile avatar">
-        <div class="sidebar-header"><a href="#home" data-scroll><span class="sidebar-name">Cole Colburn</span>
+        <div class="sidebar-header"><a href="#home" data-scroll><span class="sidebar-name">Cole Coburn</span>
           <p class="sidebar-status">Available for work!</p>
         </div>
         <div class="sidebar-menu">
@@ -160,7 +160,7 @@ Like the Greeks, I believe that a strong and healthy body is the foundation for 
                         <div class="col-12 col-md-6 col-lg-4">
                           <div class="single-service"><i class="icon service-icon ion-md-images"></i>
                             <h6 class="service-title">One-on-one training sessions</h6>
-                            
+                            <p class="service-description"><h3>$<strong>50</strong></p></h3>
                             <p class="service-description"> 
                           </div>
                         </div>
@@ -168,7 +168,7 @@ Like the Greeks, I believe that a strong and healthy body is the foundation for 
             <div class="col-12 col-md-6 col-lg-4">
               <div class="single-service"><i class="icon service-icon ion-logo-css3"></i>
                 <h6 class="service-title">Personalized meal planning</h6>
-                
+                <p class="service-description"><h3>$<strong>150</strong></p></h3>
                 <p class="service-description"> 4 weeks of customized meal plans to fit your unique macronutrient profile, with weekly check-ins</p> 
                 </p>
               </div>
@@ -177,7 +177,7 @@ Like the Greeks, I believe that a strong and healthy body is the foundation for 
             <div class="col-12 col-md-6 col-lg-4">
               <div class="single-service"><i class="icon service-icon ion-logo-ionic"></i>
                 <h6 class="service-title">Combo: Nutrition services: Nutrition coaching</h6>
-                
+                <p class="service-description"><h3>$<strong>400</strong></p></h3>
                 <p class="service-description"> 4 weeks of customized meal plans to fit your unique macronutrient profile, with weekly check-ins” + 2 training sessions per week</p> 
               </div>
             </div>
@@ -272,22 +272,60 @@ Like the Greeks, I believe that a strong and healthy body is the foundation for 
             </div>
           </div>
           <div class="row">
-            <!-- Contact form-->
-            <div class="col-12">
-              <form class="contact-form" id="contact-form" action="php/contact.php">
-                <div class="row">
-                  <div class="col-12 col-md-6 form-group"><input class="form-control" id="contact-name" type="text" name="name" placeholder="Name" required=""></div>
-                  <div class="col-12 col-md-6 form-group"><input class="form-control" id="contact-email" type="email" name="email" placeholder="Email" required=""></div>
-                  <div class="col-12 form-group"><input class="form-control" id="contact-subject" type="text" name="subject" placeholder="Subject" required=""></div>
-                  <div class="col-12 form-group form-message"><textarea class="form-control" id="contact-message" name="message" placeholder="Message" rows="5" required=""></textarea></div>
-                  <div class="col-12 form-submit"><button class="btn button-main button-scheme" id="contact-submit" type="submit">Send message</button>
-                    <p class="contact-feedback"></p>
-                  </div>
-                </div>
-              </form>
-            </div>
+<!-- Contact form-->
+<div class="col-12">
+  <form class="contact-form" id="contact-form">
+      <div class="row">
+          <div class="col-12 col-md-6 form-group"><input class="form-control" id="contact-name" type="text" name="name" placeholder="Name" required=""></div>
+          <div class="col-12 col-md-6 form-group"><input class="form-control" id="contact-email" type="email" name="email" placeholder="Email" required=""></div>
+          <div class="col-12 form-group"><input class="form-control" id="contact-subject" type="text" name="subject" placeholder="Subject" required=""></div>
+          <div class="col-12 form-group form-message"><textarea class="form-control" id="contact-message" name="message" placeholder="Message" rows="5" required=""></textarea></div>
+          <div class="col-12 form-submit"><button class="btn button-main button-scheme" id="contact-submit" type="submit">Send message</button>
+              <p class="contact-feedback"></p>
           </div>
-        </div>
+      </div>
+  </form>
+</div>
+
+
+
+<script>
+  const form = document.getElementById('contact-form');
+
+  // Function to sanitize form inputs
+  function sanitizeInput(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      let data = {
+          name: document.getElementById('contact-name').value,
+          email: document.getElementById('contact-email').value,
+          subject: document.getElementById('contact-subject').value,
+          message: document.getElementById('contact-message').value,
+      };
+
+      fetch('https://djsefrb1rd.execute-api.us-east-1.amazonaws.com/prod/', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+      })
+      .then(response => response.json())
+      .then(data => {
+            console.log(data);
+            form.reset();  // This will clear the form fields after a successful submission.
+            alert('Be in touch soon!');
+      })
+      .catch((error) => console.error('Error:', error));
+  });
+</script>
+
+
+
       </section>
       <!-- Footer-->
       <footer class="footer-area single-section">
